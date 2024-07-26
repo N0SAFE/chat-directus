@@ -1,0 +1,19 @@
+{
+    "extends": "@repo/tsconfig/nextjs.json",
+    "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+            "@/*": ["src/*"],
+            "@repo/ui/*": ["dist/*"]
+        },
+        "rootDir": "src",
+        "outDir": "dist",
+        "noEmit": false,
+        "declaration": true,
+        "declarationDir": "./dist",
+        "emitDeclarationOnly": true,
+        "declarationMap": true
+    },
+    "include": ["next-env.d.ts", "src/**/*", ".next/types/**/*.ts"],
+    "exclude": ["node_modules", "dist", "tsup.config.ts"]
+}

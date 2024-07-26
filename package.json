@@ -1,0 +1,41 @@
+{
+    "name": "chat-directus",
+    "private": true,
+    "workspaces": [
+        "apps/*",
+        "packages/*"
+    ],
+    "scripts": {
+        "update:api": "dotenv -v FORCE_COLOR=1 -- turbo run api#update",
+        "init": "npm ci && node init.js && dotenv -e .env -- npm run bootstrap -w apps/api && node ./packages/bin/dist/runUntil.js \"dotenv -e .env -- npm run start -w api\" \"envCli wait-port ${NEXT_PUBLIC_API_URL}${API_PING_PATH} && dotenv -v FORCE_COLOR=1 -- turbo run init && npm run\" && npm run generate:directus:types",
+        "generate:directus:types": "node ./packages/bin/dist/runUntil.js \"dotenv -e .env -- npm run start -w api\" \"dotenv -v FORCE_COLOR=1 -- turbo run generate:directus:types\"",
+        "build:force": "node ./packages/bin/dist/runUntil.js \"dotenv -e .env -- npm run start -w api\" \"envCli wait-port ${NEXT_PUBLIC_API_URL}${API_PING_PATH} && dotenv -v FORCE_COLOR=1 -- turbo build --force\"",
+        "build": "node ./packages/bin/dist/runUntil.js \"dotenv -e .env -- npm run start -w api\" \"envCli wait-port ${NEXT_PUBLIC_API_URL}${API_PING_PATH} && dotenv -v FORCE_COLOR=1 -- turbo build\"",
+        "dev": "dotenv -v FORCE_COLOR=1 -- turbo run dev",
+        "start": "dotenv -v FORCE_COLOR=1 -- turbo start",
+        "test": "node ./packages/bin/dist/runUntil.js \"dotenv -e .env -- npm run start -w api\" \"envCli wait-port ${NEXT_PUBLIC_API_URL}${API_PING_PATH} && dotenv -v FORCE_COLOR=1 -- turbo test\"",
+        "start:local": "dotenv -v FORCE_COLOR=1 -- turbo start:local",
+        "lint": "dotenv -v FORCE_COLOR=1 -- turbo lint",
+        "format": "dotenv -v FORCE_COLOR=1 -- turbo pretify",
+        "clean": "dotenv -v FORCE_COLOR=1 -- turbo clean",
+        "docs": "npm run dev --workspace=@repo/docs",
+        "web": "npm run dev --workspace=@repo/web",
+        "ui": "npm run dev --workspace=@repo/ui",
+        "ui:add": "npm run ui:add --workspace=@repo/ui"
+    },
+    "devDependencies": {
+        "@repo/bin": "*",
+        "prompts": "^2.4.2",
+        "turbo": "^2.0.6"
+    },
+    "engines": {
+        "node": ">=18"
+    },
+    "packageManager": "npm@10.8.1",
+    "dependencies": {
+        "dotenv": "^16.4.5",
+        "dotenv-cli": "^7.4.2",
+        "random-hash": "^4.0.1",
+        "wait-port": "^1.1.0"
+    }
+}

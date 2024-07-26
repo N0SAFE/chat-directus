@@ -1,0 +1,38 @@
+{
+  "name": "@repo/crontimev2",
+  "version": "1.0.0",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
+    }
+  },
+  "scripts": {
+    "init": "npm run build",
+    "dev": "concurrently -c \"blue,green\" -n \"files,types\" \"tsup --watch\" \"tsc --build --force --pretty --preserveWatchOutput --verbose --diagnostics --watch\"",
+    "build": "concurrently -c \"blue,green\" -n \"files,types\" \"tsup\" \"tsc --build --force --pretty --preserveWatchOutput --verbose --diagnostics\"",
+    "lint": "eslint \"**/*.ts*\"",
+    "test": "echo 'all packages:bin tests passed!'",
+    "clean": "rimraf dist",
+    "cron": "node dist/index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@repo/tsup-config": "*",
+    "cron-time-generator": "^2.0.3",
+    "rimraf": "^6.0.1"
+  },
+  "devDependencies": {
+    "@repo/eslint-config": "*",
+    "@repo/tsconfig": "*",
+    "typescript": "^5.5.3"
+  }
+}
